@@ -1,13 +1,14 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
-import { Filter, SlidersHorizontal, ShoppingCart, Loader2, ArrowRight, Zap } from "lucide-react"; 
+// ✅ Fixed: Removed unused 'ShoppingCart'
+import { Filter, SlidersHorizontal, Loader2, ArrowRight, Zap } from "lucide-react"; 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import Image from "next/image"; 
-import { motion, AnimatePresence } from "framer-motion"; // 👈 Animation Library
+import { motion, AnimatePresence } from "framer-motion"; 
 
-// --- 1. DATA CONFIGURATION (DATA IS EXACTLY SAME AS BEFORE) ---
+// --- 1. DATA CONFIGURATION ---
 
 const categories = [
   { id: "street-lights", name: "Solar Street Lights" },
@@ -22,7 +23,7 @@ const categories = [
   { id: "home-lights", name: "Home Lights" },
 ];
 
-// Helper to get Premium Images based on Category (You can replace URLs with local paths)
+// Helper to get Premium Images based on Category
 const getImageForCategory = (category: string) => {
   switch(category) {
     case "Solar Street Lights": return "https://images.unsplash.com/photo-1617144788876-4767d2836262?auto=format&fit=crop&q=80&w=800";
@@ -142,12 +143,13 @@ function ProductsContent() {
     }
   };
 
+  // ✅ FIX: Added 'as const' to type: "spring"
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { type: "spring", stiffness: 100, damping: 12 }
+      transition: { type: "spring" as const, stiffness: 100, damping: 12 }
     }
   };
 
@@ -214,13 +216,13 @@ function ProductsContent() {
                   <div className="space-y-3">
                     {options.map((item: string, idx: number) => (
                       <label key={idx} className="flex items-center gap-3 cursor-pointer group">
-                         <div className="relative flex items-center">
-                           <input type="checkbox" className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-slate-300 transition-all checked:border-blue-500 checked:bg-blue-500 hover:border-blue-400" />
-                           <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 peer-checked:opacity-100">
-                             <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
-                           </div>
-                         </div>
-                         <span className="text-slate-600 text-sm font-medium group-hover:text-blue-600 transition-colors">{item}</span>
+                          <div className="relative flex items-center">
+                            <input type="checkbox" className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-slate-300 transition-all checked:border-blue-500 checked:bg-blue-500 hover:border-blue-400" />
+                            <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white opacity-0 peer-checked:opacity-100">
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" /></svg>
+                            </div>
+                          </div>
+                          <span className="text-slate-600 text-sm font-medium group-hover:text-blue-600 transition-colors">{item}</span>
                       </label>
                     ))}
                   </div>
