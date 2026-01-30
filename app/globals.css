@@ -1,0 +1,16 @@
+@import "tailwindcss";
+
+@keyframes shine {
+  100% {
+    left: 125%;
+  }
+}
+
+.animate-shine {
+  animation: shine 1s;
+}
+
+/* Optional: For background pulse */
+.animate-pulse-slow {
+    animation: pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
